@@ -93,7 +93,6 @@ export function TicTacToe() {
       }
     }
     if (hasPlayerWon(positionsOfCurrentPlayer)) {
-      console.log(`Player ${currentPlayer} has won!`);
       setWinner(currentPlayer);
     } else {
       switchPlayer();
@@ -101,9 +100,7 @@ export function TicTacToe() {
   }
 
   function resetGame() {
-    setGridValues({});
     setHistory([]);
-    refreshGrid();
     setCurrentPlayer(Players.X);
     setWinner(null);
   }
@@ -117,7 +114,7 @@ export function TicTacToe() {
       {!winner && <h2>Current Player: {currentPlayer}</h2>}
       <Grid gridArray={gridCreationArray} gridValues={gridValues} />
       {winner && (
-        <h1 className={`victory-confetti-${winner}`}>Player X wins</h1>
+        <h1 className={`victory-confetti-${winner}`}>Player {winner} wins</h1>
       )}
       {
         <button onClick={resetGame} className="resetButton">
