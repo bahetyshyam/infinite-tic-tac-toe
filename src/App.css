@@ -1,0 +1,137 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.box {
+  width: 100px; /* Box size */
+  height: 100px;
+  border: 3px solid #000; /* Border */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em; /* Larger text for visibility */
+  cursor: pointer; /* Indicate it's clickable */
+  margin: 5px;
+}
+
+.box:hover {
+  background-color: #f0f0f0; /* Slight background change on hover */
+}
+
+.playerX {
+  color: #ff6861;
+}
+
+.playerO {
+  color: #4a90e2;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.textFadeIn {
+  animation: fadeIn 1s ease-in-out forwards;
+  display: block;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.disappearing {
+  opacity: 0.5 !important;
+}
+
+.victory-confetti-X {
+  font-size: 2em;
+  background: linear-gradient(
+    45deg,
+    #ff6861,
+    #ff8c00
+  ); /* Gold to DarkOrange gradient */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent; /* For Safari */
+  background-size: 200% 100%;
+  animation: celebrate 3s linear infinite;
+}
+
+.victory-confetti-O {
+  font-size: 2em;
+  background: linear-gradient(45deg, #4a90e2, #005c97);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent; /* For Safari */
+  background-size: 200% 100%;
+  animation: celebrate 3s linear infinite;
+}
+
+@keyframes celebrate {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.resetButton {
+  background-color: white; /* Updated to a soothing shade of blue */
+  color: black;
+  border: 1px solid black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 30px;
+  cursor: pointer;
+  border-radius: 8px;
+}
