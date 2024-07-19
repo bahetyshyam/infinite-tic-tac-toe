@@ -3,25 +3,30 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-size: 16px; /* Base font size */
 }
 
-.card {
-  padding: 2em;
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px; /* Smaller base font size for mobile devices */
+  }
 }
 
-.read-the-docs {
-  color: #888;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .box {
-  width: 100px; /* Box size */
-  height: 100px;
-  border: 3px solid #000; /* Border */
+  width: 95px;
+  height: 95px;
+  border: 3px solid #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3em; /* Larger text for visibility */
-  cursor: pointer; /* Indicate it's clickable */
+  font-size: 2.7rem;
+  cursor: pointer;
   margin: 5px;
   -webkit-tap-highlight-color: transparent; /* Prevent highlight on tap for mobile */
 }
@@ -38,18 +43,22 @@
   color: #4a90e2;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@keyframes textPopUp {
+  0% {
+    transform: scale(0);
   }
-  to {
-    opacity: 1;
+  30% {
+    transform: scale(1.5); /* Temporarily scale up to create a 'pop' effect */
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
 .textFadeIn {
-  animation: fadeIn 1s ease-in-out forwards;
-  display: block;
+  animation: textPopUp 0.5s ease-in-out forwards;
+  display: inline-block;
+  transform-origin: center;
 }
 
 .grid-row {
@@ -57,54 +66,62 @@
 }
 
 .disappearing {
-  opacity: 0.5 !important;
+  opacity: 0.4 !important;
 }
 
-.victory-confetti-X {
-  font-size: 2em;
-  background: linear-gradient(
-    45deg,
-    #ff6861,
-    #ff8c00
-  ); /* Gold to DarkOrange gradient */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent; /* For Safari */
-  background-size: 200% 100%;
-  animation: celebrate 3s linear infinite;
-}
-
-.victory-confetti-O {
-  font-size: 2em;
-  background: linear-gradient(45deg, #4a90e2, #005c97);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent; /* For Safari */
-  background-size: 200% 100%;
-  animation: celebrate 3s linear infinite;
-}
-
-@keyframes celebrate {
-  0% {
-    background-position: 200% 0;
+@keyframes scalePulse {
+  from {
+    transform: scale(0);
   }
-  100% {
-    background-position: -200% 0;
+  to {
+    transform: scale(1);
   }
+}
+
+.victory-confetti {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  animation: scalePulse 0.5s ease-in-out forwards;
+}
+
+.currentPlayer {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .resetButton {
   background-color: white; /* Updated to a soothing shade of blue */
   color: black;
   border: 1px solid black;
-  padding: 10px 20px;
+  padding: 5px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
-  margin-top: 30px;
+  font-size: 1rem;
   cursor: pointer;
   border-radius: 8px;
+  margin-top: 10px;
+}
+
+.resetButton:hover {
+  background-color: #f0f0f0; /* Slight background change on hover */
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.winning-box {
+  animation: flash 1s infinite;
 }

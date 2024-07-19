@@ -1,5 +1,5 @@
 import { Box } from "./Box";
-import { GridValuesDictionary } from "./types";
+import { GridValuesDictionary } from "../types";
 
 interface IProps {
   gridArray: number[][];
@@ -19,6 +19,7 @@ export function Grid({ gridArray, gridValues }: Readonly<IProps>) {
                 cellNumber={cellNumber}
                 renderText={gridItem?.renderText}
                 isDisappearing={gridItem?.isDisappearing}
+                isWinner={gridItem?.isWinner}
               />
             );
           })}

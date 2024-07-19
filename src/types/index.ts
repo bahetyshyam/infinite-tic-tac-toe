@@ -2,6 +2,7 @@ export interface GridItem {
   key: number;
   renderText?: Players;
   isDisappearing?: boolean;
+  isWinner?: boolean;
 }
 
 export type GridArray<T> = T[][];

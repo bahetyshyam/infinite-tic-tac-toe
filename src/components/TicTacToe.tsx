@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Grid } from "./Grid";
-import { GridItem, GridValuesDictionary, HistoryItem, Players } from "./types";
-import { createGridArray, hasPlayerWon } from "./utils";
-import { BOX_CLICKED, eventBus } from "./eventBus";
+import { GridItem, GridValuesDictionary, HistoryItem, Players } from "../types";
+import { createGridArray, hasPlayerWon } from "../utils/utils";
+import { BOX_CLICKED, eventBus } from "../eventBus";
 
 export function TicTacToe() {
   const [gridValues, setGridValues] = useState<GridValuesDictionary>({});
@@ -27,16 +27,20 @@ export function TicTacToe() {
       eventBus.off(BOX_CLICKED);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history, currentPlayer, winner]);
+  }, [history, currentPlayer]);
 
   useEffect(() => {
-    refreshGrid();
+    if (!winner) {
+      refreshGrid();
+    }
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history]);
 
   useEffect(() => {
-    checkIfCurrentPlayerHasWon();
+    if (!winner) {
+      checkIfCurrentPlayerHasWon();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gridValues]);
 
@@ -77,13 +81,13 @@ export function TicTacToe() {
     });
   }
 
-  const switchPlayer = useCallback(() => {
+  function switchPlayer() {
     if (currentPlayer === Players.X) {
       setCurrentPlayer(Players.O);
     } else {
       setCurrentPlayer(Players.X);
     }
-  }, [currentPlayer]);
+  }
 
   function checkIfCurrentPlayerHasWon() {
     const positionsOfCurrentPlayer: number[] = [];
@@ -92,35 +96,64 @@ export function TicTacToe() {
         positionsOfCurrentPlayer.push(parseInt(boxNumber));
       }
     }
-    if (hasPlayerWon(positionsOfCurrentPlayer)) {
+    const winnerBoxes = hasPlayerWon(positionsOfCurrentPlayer);
+    if (winnerBoxes) {
       setWinner(currentPlayer);
+      highlightWinnerBoxes(winnerBoxes);
     } else {
       switchPlayer();
     }
   }
 
+  function highlightWinnerBoxes(winnerBoxes: number[]) {
+    setGridValues((oldGridValues) => {
+      const newGridValues = { ...oldGridValues };
+      winnerBoxes.forEach((boxNumber) => {
+        newGridValues[boxNumber] = {
+          ...oldGridValues[boxNumber],
+          key: boxNumber,
+          isWinner: true,
+        };
+      });
+      return newGridValues;
+    });
+  }
+
+  const containerClicked = () => {
+    if (winner) {
+      resetGame();
+    }
+  };
+
   function resetGame() {
-    setHistory([]);
-    setCurrentPlayer(Players.X);
     setWinner(null);
+    setCurrentPlayer(Players.O);
+    setHistory([]);
   }
 
   const gridCreationArray = useMemo(() => {
     return createGridArray(3, 3);
   }, []);
 
+  const currentPlayerClass =
+    currentPlayer === Players.X ? "playerX" : "playerO";
+
+  const winnerPlayerClass = winner === Players.X ? "playerX" : "playerO";
+
   return (
-    <div>
-      {!winner && <h2>Current Player: {currentPlayer}</h2>}
-      <Grid gridArray={gridCreationArray} gridValues={gridValues} />
+    <div onClick={containerClicked} className="container">
       {winner && (
-        <h1 className={`victory-confetti-${winner}`}>Player {winner} wins</h1>
+        <div className={`victory-confetti ${winnerPlayerClass}`}>
+          Player {winner} wins
+        </div>
       )}
-      {
-        <button onClick={resetGame} className="resetButton">
-          Reset Game
-        </button>
-      }
+      {!winner && (
+        <div className={`currentPlayer ${currentPlayerClass}`}>
+          Current Player: {currentPlayer}
+        </div>
+      )}
+
+      <Grid gridArray={gridCreationArray} gridValues={gridValues} />
     </div>
   );
 }

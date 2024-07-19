@@ -1,10 +1,11 @@
-import { Players } from "./types";
-import { BOX_CLICKED, eventBus } from "./eventBus";
+import { Players } from "../types";
+import { BOX_CLICKED, eventBus } from "../eventBus";
 import { useMemo } from "react";
 
 interface IProps {
   renderText?: Players;
   isDisappearing?: boolean;
+  isWinner?: boolean;
   cellNumber: number;
 }
 
@@ -16,6 +17,7 @@ export function Box({
   renderText,
   isDisappearing,
   cellNumber,
+  isWinner,
 }: Readonly<IProps>) {
   const boxStylesObject = useMemo(() => {
     return {
@@ -46,7 +48,11 @@ export function Box({
       className={`box ${playerClass}`}
     >
       {renderText && (
-        <span className={`textFadeIn ${isDisappearing ? "disappearing" : ""}`}>
+        <span
+          className={`textFadeIn ${isDisappearing ? "disappearing" : ""} ${
+            isWinner ? "winning-box" : ""
+          }`}
+        >
           {renderText}
         </span>
       )}

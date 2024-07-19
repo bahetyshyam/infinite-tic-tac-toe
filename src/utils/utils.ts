@@ -29,7 +29,7 @@ export const ticTacToeWinningCombinations: number[][] = [
 export function hasPlayerWon(
   currentPositionsOfPlayer: number[],
   winningCombinations = ticTacToeWinningCombinations,
-) {
+): number[] | false {
   for (let i = 0; i < winningCombinations.length; i++) {
     const [a, b, c] = winningCombinations[i];
     if (
@@ -37,7 +37,7 @@ export function hasPlayerWon(
       currentPositionsOfPlayer.includes(b) &&
       currentPositionsOfPlayer.includes(c)
     ) {
-      return true;
+      return winningCombinations[i];
     }
   }
   return false;
